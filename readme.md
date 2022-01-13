@@ -1,0 +1,1 @@
+Small sample project where a Compose LazyCoumn is placed in a regular (non-compose) bottomsheet and some tweaks are made to provide a better scrolling experience between the bottomsheet and LazyColumn
