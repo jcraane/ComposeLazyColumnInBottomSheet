@@ -25,10 +25,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomSheet() {
-//        toto add compose view here with lazy column
-
         val lockableBottomSheetBehavior = LockableBottomSheetBehavior<FrameLayout>(this@MainActivity, null)
         findViewById<FrameLayout>(R.id.bottomSheet).updateLayoutParams<CoordinatorLayout.LayoutParams> {
+            // BottomSheetBehavior is being set from code instead of from xml.
             this.behavior = lockableBottomSheetBehavior
         }
 
@@ -43,10 +42,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<ComposeView>(R.id.composeView).setContent {
             MaterialTheme {
                 MyList(scrollListener = { childScrollPosition ->
+                    // Pass the scroll position to the bottomsheet behavior.
                     lockableBottomSheetBehavior.childScrollPosition = childScrollPosition
                 },
                 onTouchEvent = { event ->
-                    println("event = $event")
                     findViewById<FrameLayout>(R.id.bottomSheet).onTouchEvent(event)
                 })
             }
@@ -75,7 +74,7 @@ class LockableBottomSheetBehavior<V : View> : BottomSheetBehavior<V> {
 
     private fun isSwipeEnabled(): Boolean {
         return if (childScrollPosition > 0) {
-            state != BottomSheetBehavior.STATE_EXPANDED
+            state != STATE_EXPANDED
         } else {
             true
         }
